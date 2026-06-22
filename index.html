@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculator</title>
+  <link rel="icon" type="image/jpeg" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiPvA_t6ApXfx7Wq_DE5FstsbdU3c78ZaumDS44bOgSg&s" />
+  <style>
+    .calc-title {
+      text-align: center;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 10px;
+    }
+  </style>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Floating particles background -->
+  <canvas id="particles"></canvas>
+
+  <div class="wrapper">
+
+    <div class="layout-wrap">
+      <h1 class="page-title">Calculator</h1>
+    <div class="layout">
+
+      <!-- Calculator -->
+      <div class="calculator">
+
+        <!-- Display -->
+        <div class="display">
+          <div class="display-top">
+            <button class="history-btn" id="historyToggle" title="Toggle History">
+              🕐 History
+            </button>
+          </div>
+          <div class="operation" id="operation"></div>
+          <div class="expression" id="expression">0</div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="buttons">
+          <!-- Row 1 -->
+          <button class="btn btn-func" data-action="clear">C</button>
+          <button class="btn btn-func" data-action="toggleSign">+/−</button>
+          <button class="btn btn-func" data-action="percent">%</button>
+          <button class="btn btn-op"   data-action="operator" data-value="÷">÷</button>
+
+          <!-- Row 2 -->
+          <button class="btn btn-num"  data-action="number"   data-value="7">7</button>
+          <button class="btn btn-num"  data-action="number"   data-value="8">8</button>
+          <button class="btn btn-num"  data-action="number"   data-value="9">9</button>
+          <button class="btn btn-op"   data-action="operator" data-value="×">×</button>
+
+          <!-- Row 3 -->
+          <button class="btn btn-num"  data-action="number"   data-value="4">4</button>
+          <button class="btn btn-num"  data-action="number"   data-value="5">5</button>
+          <button class="btn btn-num"  data-action="number"   data-value="6">6</button>
+          <button class="btn btn-op"   data-action="operator" data-value="−">−</button>
+
+          <!-- Row 4 -->
+          <button class="btn btn-num"  data-action="number"   data-value="1">1</button>
+          <button class="btn btn-num"  data-action="number"   data-value="2">2</button>
+          <button class="btn btn-num"  data-action="number"   data-value="3">3</button>
+          <button class="btn btn-op"   data-action="operator" data-value="+">+</button>
+
+          <!-- Row 5 -->
+          <button class="btn btn-num"  data-action="number" data-value="0">0</button>
+          <button class="btn btn-num"  data-action="decimal">.</button>
+          <button class="btn btn-func" data-action="delete">⌫</button>
+          <button class="btn btn-eq"   data-action="equals">=</button>
+        </div>
+      </div>
+
+      <!-- History Panel — always visible beside calculator -->
+      <div class="history-panel" id="historyPanel">
+        <div class="history-header">
+          <span>History</span>
+          <button class="clear-history" id="clearHistory">🗑 Clear</button>
+        </div>
+        <ul id="historyList"></ul>
+      </div>
+
+    </div><!-- /.layout -->
+    </div><!-- /.layout-wrap -->
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

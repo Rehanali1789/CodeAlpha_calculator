@@ -1,0 +1,342 @@
+/* ===== Reset & Base ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-grad-1: #0d0d2b;
+  --bg-grad-2: #1a0533;
+  --bg-grad-3: #002b3d;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --display-bg: rgba(0, 0, 0, 0.35);
+  --btn-bg: rgba(255, 255, 255, 0.07);
+  --btn-hover: rgba(255, 255, 255, 0.15);
+  --btn-active: rgba(255, 255, 255, 0.25);
+  --op-bg: rgba(0, 200, 255, 0.12);
+  --op-hover: rgba(0, 200, 255, 0.25);
+  --eq-bg: #00c8ff;
+  --eq-hover: #33d6ff;
+  --func-bg: rgba(180, 100, 255, 0.15);
+  --func-hover: rgba(180, 100, 255, 0.3);
+  --text: #ffffff;
+  --text-dim: rgba(255, 255, 255, 0.55);
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --glow-cyan: 0 0 20px rgba(0, 200, 255, 0.5);
+  --radius: 20px;
+  --btn-radius: 14px;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: var(--text);
+  overflow: hidden;
+}
+
+/* ===== Animated Gradient Background ===== */
+body {
+  background: linear-gradient(135deg, var(--bg-grad-1), var(--bg-grad-2), var(--bg-grad-3));
+  background-size: 400% 400%;
+  animation: gradientShift 10s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== Particles Canvas ===== */
+#particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== Page Load Fade-in ===== */
+.wrapper {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  animation: fadeIn 0.7s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Side-by-side layout ===== */
+.layout-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 0 18px rgba(0, 200, 255, 0.7), 0 0 40px rgba(0, 200, 255, 0.3);
+}
+
+.layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* ===== Calculator Card ===== */
+.calculator {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  width: 340px;
+  max-width: 100%;
+}
+
+/* ===== Display ===== */
+.display {
+  background: var(--display-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  padding: 12px 16px 14px;
+  margin-bottom: 20px;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: hidden;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.3), var(--glow-cyan);
+  animation: neonPulse 3s ease-in-out infinite;
+}
+
+/* Top row inside display: history button */
+.display-top {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 6px;
+}
+
+.history-btn {
+  background: rgba(0, 200, 255, 0.1);
+  border: 1px solid rgba(0, 200, 255, 0.3);
+  border-radius: 8px;
+  color: #00c8ff;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 10px;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  letter-spacing: 0.3px;
+}
+.history-btn:hover {
+  background: rgba(0, 200, 255, 0.22);
+  box-shadow: 0 0 10px rgba(0, 200, 255, 0.35);
+}
+.history-btn.active {
+  background: rgba(0, 200, 255, 0.3);
+  box-shadow: 0 0 14px rgba(0, 200, 255, 0.5);
+}
+
+.operation {
+  font-size: 13px;
+  color: var(--text-dim);
+  min-height: 18px;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+  text-align: right;
+  transition: opacity 0.2s;
+}
+
+.expression {
+  font-size: 42px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  word-break: break-all;
+  text-align: right;
+  line-height: 1.1;
+  transition: all 0.15s ease;
+  text-shadow: 0 0 12px rgba(0, 200, 255, 0.4);
+}
+
+.expression.result-anim {
+  animation: resultPop 0.2s ease;
+}
+
+@keyframes neonPulse {
+  0%, 100% { box-shadow: inset 0 2px 8px rgba(0,0,0,0.3), 0 0 12px rgba(0,200,255,0.3); }
+  50%       { box-shadow: inset 0 2px 8px rgba(0,0,0,0.3), 0 0 28px rgba(0,200,255,0.65); }
+}
+
+@keyframes resultPop {
+  0%   { transform: scale(1.06); opacity: 0.6; }
+  100% { transform: scale(1);    opacity: 1;   }
+}
+
+/* ===== Button Grid ===== */
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+/* ===== Base Button ===== */
+.btn {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--btn-radius);
+  background: var(--btn-bg);
+  color: var(--text);
+  font-size: 20px;
+  font-weight: 400;
+  height: 64px;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.1s, box-shadow 0.18s;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:hover  { background: var(--btn-hover); box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+.btn:active { transform: scale(0.93); background: var(--btn-active); }
+
+/* Operator buttons */
+.btn-op {
+  background: var(--op-bg);
+  color: #00c8ff;
+  font-weight: 600;
+}
+.btn-op:hover  { background: var(--op-hover); box-shadow: 0 0 14px rgba(0,200,255,0.35); }
+.btn-op.active { background: #00c8ff; color: #000; }
+
+/* Function buttons (C, +/−, %, ⌫) */
+.btn-func {
+  background: var(--func-bg);
+  color: #cc99ff;
+  font-weight: 500;
+}
+.btn-func:hover { background: var(--func-hover); box-shadow: 0 0 14px rgba(180,100,255,0.3); }
+
+/* Equals button */
+.btn-eq {
+  background: var(--eq-bg);
+  color: #000;
+  font-weight: 700;
+  font-size: 24px;
+  box-shadow: 0 0 18px rgba(0, 200, 255, 0.5);
+}
+.btn-eq:hover  { background: var(--eq-hover); box-shadow: 0 0 28px rgba(0,200,255,0.75); }
+.btn-eq:active { transform: scale(0.92); }
+
+/* Zero button spans 2 cols — removed, now same size as other buttons */
+
+/* ===== Ripple Effect ===== */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(0);
+  animation: rippleAnim 0.5s linear;
+  pointer-events: none;
+}
+
+@keyframes rippleAnim {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* ===== History Panel — toggled via button ===== */
+.history-panel {
+  width: 220px;
+  height: 490px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: none;               /* hidden by default */
+  flex-direction: column;
+  overflow: hidden;
+  animation: slideIn 0.22s ease;
+}
+
+.history-panel.open { display: flex; }
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--glass-border);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--text);
+  flex-shrink: 0;
+}
+
+.clear-history {
+  background: rgba(255, 80, 100, 0.15);
+  border: 1px solid rgba(255, 80, 100, 0.3);
+  border-radius: 8px;
+  color: #ff6680;
+  font-size: 12px;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.clear-history:hover {
+  background: rgba(255, 80, 100, 0.3);
+  box-shadow: 0 0 10px rgba(255, 80, 100, 0.4);
+}
+
+#historyList {
+  list-style: none;
+  overflow-y: auto;
+  flex: 1;
+  padding: 6px 0;
+}
+
+#historyList::-webkit-scrollbar { width: 4px; }
+#historyList::-webkit-scrollbar-track { background: transparent; }
+#historyList::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+
+#historyList li {
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+#historyList li:hover { background: rgba(255,255,255,0.07); }
+
+#historyList .hist-expr   { font-size: 11px; color: var(--text-dim); margin-bottom: 2px; }
+#historyList .hist-result { font-size: 18px; font-weight: 300; color: #fff; }
+
+/* ===== Responsive ===== */
+@media (max-width: 640px) {
+  .layout { flex-direction: column; align-items: center; }
+  .calculator { width: 100%; max-width: 360px; padding: 18px; }
+  .history-panel { width: 100%; max-width: 360px; height: 200px; }
+  .expression { font-size: 34px; }
+  .btn { height: 58px; font-size: 18px; }
+}
