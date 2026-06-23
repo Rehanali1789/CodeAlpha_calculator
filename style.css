@@ -104,7 +104,7 @@ body {
   box-shadow: var(--shadow);
   padding: 24px;
   width: 340px;
-  max-width: 100%;
+  max-width: calc(100vw - 40px);
 }
 
 /* ===== Display ===== */
@@ -190,6 +190,7 @@ body {
 .buttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
   gap: 10px;
 }
 
@@ -332,11 +333,144 @@ body {
 #historyList .hist-expr   { font-size: 11px; color: var(--text-dim); margin-bottom: 2px; }
 #historyList .hist-result { font-size: 18px; font-weight: 300; color: #fff; }
 
-/* ===== Responsive ===== */
-@media (max-width: 640px) {
-  .layout { flex-direction: column; align-items: center; }
-  .calculator { width: 100%; max-width: 360px; padding: 18px; }
-  .history-panel { width: 100%; max-width: 360px; height: 200px; }
-  .expression { font-size: 34px; }
-  .btn { height: 58px; font-size: 18px; }
+/* =====================================================
+   RESPONSIVE — mobile-first, fills screen on all devices
+   ===================================================== */
+
+/* ── Mobile portrait (default, ≤600px) ── */
+@media (max-width: 600px) {
+  html, body {
+    height: 100%;
+    overflow: hidden;   /* no scroll — calc fills screen */
+  }
+
+  .wrapper {
+    padding: 0;
+    align-items: stretch;
+    justify-content: stretch;
+    min-height: 100dvh;        /* dynamic viewport height */
+  }
+
+  .layout-wrap {
+    width: 100%;
+    height: 100dvh;
+    gap: 0;
+    justify-content: space-between;
+    padding: 12px 12px 0;
+  }
+
+  .page-title {
+    font-size: 16px;
+    letter-spacing: 4px;
+    padding-top: 4px;
+    text-align: center;
+  }
+
+  .layout {
+    flex-direction: column;
+    align-items: stretch;
+    flex: 1;
+    gap: 0;
+    width: 100%;
+  }
+
+  /* Calculator fills remaining height */
+  .calculator {
+    width: 100%;
+    max-width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    border-radius: 16px 16px 0 0;
+    border-bottom: none;
+  }
+
+  /* Display takes available space */
+  .display {
+    margin-bottom: 12px;
+    flex-shrink: 0;
+    min-height: unset;
+    padding: 10px 14px;
+  }
+
+  .expression { font-size: 36px; }
+  .operation  { font-size: 12px; }
+
+  /* Buttons fill remaining space */
+  .buttons {
+    flex: 1;
+    gap: 8px;
+    /* each button auto-sizes to fill the grid */
+    grid-template-rows: repeat(5, 1fr);
+  }
+
+  .btn {
+    height: 100%;          /* fill grid row */
+    min-height: 48px;
+    font-size: 20px;
+    border-radius: 12px;
+  }
+
+  /* History panel slides up from bottom as overlay */
+  .history-panel {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    width: 100%;
+    height: 55dvh;
+    max-height: 55dvh;
+    border-radius: 20px 20px 0 0;
+    z-index: 100;
+  }
+}
+
+/* ── Very small phones (≤360px) ── */
+@media (max-width: 360px) {
+  .page-title    { font-size: 13px; letter-spacing: 3px; }
+  .expression    { font-size: 28px; }
+  .btn           { font-size: 17px; min-height: 44px; }
+  .buttons       { gap: 6px; }
+  .display       { padding: 8px 10px; }
+}
+
+/* ── Mobile landscape (height ≤ 480px) ── */
+@media (max-height: 480px) and (orientation: landscape) {
+  .wrapper       { padding: 0; align-items: stretch; }
+  .layout-wrap   { flex-direction: row; height: 100dvh; padding: 8px; gap: 10px; align-items: stretch; }
+  .page-title    { display: none; }          /* hide title in landscape to save space */
+  .layout        { flex-direction: row; flex: 1; gap: 10px; }
+  .calculator    { flex: 1; padding: 10px; border-radius: 14px; }
+  .display       { min-height: unset; margin-bottom: 8px; padding: 8px 12px; }
+  .expression    { font-size: 26px; }
+  .buttons       { gap: 6px; grid-template-rows: repeat(5, 1fr); }
+  .btn           { height: 100%; min-height: 36px; font-size: 15px; border-radius: 10px; }
+  .history-panel {
+    position: static;
+    width: 160px;
+    height: 100%;
+    max-height: 100%;
+    border-radius: 14px;
+    flex-shrink: 0;
+  }
+}
+
+/* ── Tablet portrait (601px – 900px) ── */
+@media (min-width: 601px) and (max-width: 900px) {
+  .layout        { flex-direction: column; align-items: center; }
+  .calculator    { width: 420px; }
+  .history-panel { width: 420px; height: 220px; }
+  .page-title    { font-size: 22px; }
+  .btn           { height: 66px; font-size: 20px; }
+}
+
+/* ── Desktop (901px+) ── */
+@media (min-width: 901px) {
+  .calculator    { width: 340px; }
+  .history-panel { width: 220px; height: 490px; }
+}
+
+/* ── Large desktop (1200px+) ── */
+@media (min-width: 1200px) {
+  .calculator    { width: 360px; }
+  .history-panel { width: 240px; height: 520px; }
 }
